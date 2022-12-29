@@ -6,10 +6,10 @@
 
             <ul class="list-unstyled components">
                 <li>
-                    <a href="#">Tiếp nhận nhân viên</a>
+                    <router-link to="them-nhan-vien">Tiếp nhận nhân viên</router-link>
                 </li>
                 <li>
-                    <a href="#">Lập thẻ độc giả</a>
+                    <router-link to="lap-the-doc-gia">Lập thẻ độc giả</router-link>
                 </li>
                 <li>
                     <a href="#">Tiếp nhận sách mới</a>
@@ -48,7 +48,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 
 body {
     font-family: 'Tahoma', sans-serif;
@@ -65,6 +65,10 @@ a:focus {
     transition: all 0.3s;
 }
 
+.sidebar {
+    display: block;
+    float: left;
+}
 
 #sidebar {
     min-width: 250px;
