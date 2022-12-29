@@ -12,7 +12,7 @@
                     <router-link to="lap-the-doc-gia">Lập thẻ độc giả</router-link>
                 </li>
                 <li>
-                    <a href="#">Tiếp nhận sách mới</a>
+                    <router-link to="them-sach">Tiếp nhận sách mới</router-link>
                 </li>
                 <li>
                     <a href="#">Tra cứu sách</a>
