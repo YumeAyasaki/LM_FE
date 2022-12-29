@@ -1,5 +1,6 @@
 <template>
   <MenuItem />
+  <router-view></router-view>
 </template>
 
 <script>
