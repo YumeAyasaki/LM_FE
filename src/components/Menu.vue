@@ -24,7 +24,7 @@
                     <a href="#">Trả sách</a>
                 </li>
                 <li>
-                    <a href="#">Ghi nhận mất sách</a>
+                    <router-link to="mat-sach">Ghi nhận mất sách</router-link>
                 </li>
                 <li>
                     <a href="#">Lập phiếu thu tiền phạt</a>

@@ -3,6 +3,7 @@ import ThemNhanVien from '../components/ThemNhanVien.vue';
 import ThemDocGia from '../components/ThemDocGia.vue';
 import ThemSach from '../components/ThemSach.vue';
 import TraCuuSach from '../components/TraCuuSach.vue';
+import MatSach from '../components/MatSach.vue';
 
 
 const routes = [{
@@ -24,6 +25,11 @@ const routes = [{
         path: '/tra-cuu-sach', ///path của route
         name: 'TraCuuSach', // tên route
         component: TraCuuSach // component route sử dụng
+    },
+    {
+        path: '/mat-sach', ///path của route
+        name: 'MatSach', // tên route
+        component: MatSach // component route sử dụng
     },
 ]
 const router = createRouter({
