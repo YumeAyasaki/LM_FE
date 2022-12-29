@@ -15,7 +15,7 @@
                     <router-link to="them-sach">Tiếp nhận sách mới</router-link>
                 </li>
                 <li>
-                    <a href="#">Tra cứu sách</a>
+                    <router-link to="tra-cuu-sach">Tra cứu sách</router-link>
                 </li>
                 <li>
                     <a href="#">Mượn sách</a>
