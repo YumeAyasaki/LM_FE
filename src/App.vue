@@ -1,19 +1,15 @@
 <template>
-  <Menu />
+  <MenuItem />
 </template>
 
-
 <script>
-import Menu from './components/Menu.vue'
-export default{
-  name: 'App',
+import MenuItem from "./components/MenuItem.vue";
+export default {
+  name: "App",
   components: {
-    Menu
-  }
-}
+    MenuItem,
+  },
+};
 </script>
 
-
-<style>
-
-</style>
+<style></style>
