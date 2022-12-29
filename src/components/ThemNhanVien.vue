@@ -43,7 +43,8 @@ export default {
     name: 'ThemNhanVien'
 }
 </script>
-<style>
+<style scoped>
+
 .container {
     margin: 10%;
 }
