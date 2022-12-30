@@ -1,16 +1,18 @@
-<template>
-  <MenuItem />
-  <router-view></router-view>
-</template>
-
 <script>
-import MenuItem from "./components/MenuItem.vue";
 export default {
   name: "App",
-  components: {
-    MenuItem,
+  data() {
+    return {
+      layout: "div",
+    };
   },
 };
 </script>
+
+<template>
+  <component :is="layout">
+    <router-view v-model:layout="layout" />
+  </component>
+</template>
 
 <style></style>
