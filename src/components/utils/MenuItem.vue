@@ -27,16 +27,16 @@
         <router-link to="mat-sach">Ghi nhận mất sách</router-link>
       </li>
       <li>
-        <a href="#">Lập phiếu thu tiền phạt</a>
+        <router-link to="thu-phat">Lập phiếu thu tiền phạt</router-link>
       </li>
       <li>
-        <a href="#">Thanh lý sách</a>
+        <router-link to="thanh-ly-sach">Thanh lý sách</router-link>
       </li>
       <li>
-        <a href="#">Báo cáo</a>
+        <router-link to="bao-cao">Báo cáo</router-link>
       </li>
       <li>
-        <a href="#">Quản lý</a>
+        <router-link to="quan-ly">Quản lý</router-link>
       </li>
     </ul>
   </nav>

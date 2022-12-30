@@ -8,6 +8,11 @@ import MatSach from "../views/MatSach.vue";
 import MuonSach from "../views/MuonSach.vue";
 import TraSach from "../views/TraSach.vue";
 
+import ThuTienPhat from "../views/PhieuThuTienPhat.vue";
+import ThanhLySach from "../views/ThanhLySach.vue";
+import BaoCao from "../views/BaoCao.vue";
+import QuanLy from "../views/QuanLy.vue";
+
 import HomePage from "../views/HomePage.vue";
 
 const routes = [
@@ -50,6 +55,26 @@ const routes = [
     path: "/tra-sach", ///path của route
     name: "TraSach", // tên route
     component: TraSach, // component route sử dụng
+  },
+  {
+    path: "/thu-phat",
+    name: "ThuPhat",
+    component: ThuTienPhat,
+  },
+  {
+    path: "/thanh-ly-sach",
+    name: "ThanhLySach",
+    component: ThanhLySach,
+  },
+  {
+    path: "/bao-cao",
+    name: "BaoCao",
+    component: BaoCao,
+  },
+  {
+    path: "/quan-ly",
+    name: "QuanLy",
+    component: QuanLy,
   },
 ];
 

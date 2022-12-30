@@ -29,8 +29,12 @@
 </template>
 
 <script>
+import LayoutDefault from "../components/layouts/LayoutDefault.vue";
 export default {
   name: "MatSach",
+  created() {
+    this.$emit("update:layout", LayoutDefault);
+  },
 };
 </script>
 <style scoped>
