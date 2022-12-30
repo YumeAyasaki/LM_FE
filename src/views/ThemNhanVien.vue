@@ -1,35 +1,49 @@
 <template>
   <div class="container">
     <h1>Tiếp nhận nhân viên</h1>
-    <form>
+    <form @submit.prevent="addEmplyee">
       <label>Họ và tên: </label>
-      <input type="text" class="text-input" />
+      <input type="text" class="text-input" v-model="name" />
 
       <label>Ngày sinh: </label>
-      <input type="date" class="date-input" />
+      <input type="date" class="date-input" v-model="dateOfBirth" />
 
       <label>Số điện thoại: </label>
-      <input type="text" class="text-input" />
+      <input type="text" class="text-input" v-model="phoneNumber" />
 
       <label>Địa chỉ: </label>
-      <input type="text" class="text-input" />
+      <input type="text" class="text-input" v-model="address" />
 
       <label>Bằng cấp: </label>
-      <select name="degree" id="degree" class="select-label">
-        <option>Cử nhân</option>
-        <option>Thạc sĩ</option>
+      <select name="degree" id="degree" class="select-label" v-model="degree">
+        <option>Tú Tài</option>
+        <option>Trung Cấp</option>
+        <option>Cao Đẳng</option>
+        <option>Đại Học</option>
+        <option>Thạc Sĩ</option>
+        <option>Tiến Sĩ</option>
       </select>
 
       <label>Chức vụ: </label>
-      <select name="degree" id="degree" class="select-label">
+      <select name="degree" id="degree" class="select-label" v-model="position">
         <option>Giám Đốc</option>
         <option>Phó Giám Đốc</option>
+        <option>Trưởng Phòng</option>
+        <option>Phó Phòng</option>
+        <option>Nhân Viên</option>
       </select>
 
       <label>Bộ phận: </label>
-      <select name="department" id="department" class="select-label">
-        <option>Thủ thư</option>
-        <option>abc</option>
+      <select
+        name="department"
+        id="department"
+        class="select-label"
+        v-model="department"
+      >
+        <option>Thủ Thư</option>
+        <option>Thủ Quỷ</option>
+        <option>Thủ Kho</option>
+        <option>Ban Giám Đốc</option>
       </select>
 
       <button class="btn">Tiếp nhận</button>
@@ -38,8 +52,37 @@
 </template>
 
 <script>
+import axios from "axios";
 export default {
   name: "ThemNhanVien",
+  data() {
+    return {
+      name: "",
+      address: "",
+      phoneNumber: "",
+      dateOfBirth: null,
+      degree: "Đại Học",
+      position: "Nhân Viên",
+      department: "Thủ Thư",
+    };
+  },
+  methods: {
+    async addEmplyee() {
+      const formData = {
+        name: this.name,
+        address: this.address,
+        phoneNumber: this.phoneNumber,
+        dateOfBirth: this.dateOfBirth,
+        degree: this.degree,
+        position: this.position,
+        department: this.department,
+      };
+      let url = "https://easy-gold-goshawk-vest.cyclic.app/Employee";
+      await axios.post(url, formData).then((response) => {
+        console.log(response);
+      });
+    },
+  },
 };
 </script>
 <style scoped>

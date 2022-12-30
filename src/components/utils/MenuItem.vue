@@ -6,25 +6,25 @@
 
     <ul class="list-unstyled components">
       <li>
-        <a href="#">Tiếp nhận nhân viên</a>
+        <router-link to="them-nhan-vien">Tiếp nhận nhân viên</router-link>
       </li>
       <li>
-        <a href="#">Lập thẻ độc giả</a>
+        <router-link to="lap-the-doc-gia">Lập thẻ độc giả</router-link>
       </li>
       <li>
-        <a href="#">Tiếp nhận sách mới</a>
+        <router-link to="them-sach">Tiếp nhận sách mới</router-link>
       </li>
       <li>
-        <a href="#">Tra cứu sách</a>
+        <router-link to="tra-cuu-sach">Tra cứu sách</router-link>
       </li>
       <li>
-        <a href="#">Mượn sách</a>
+        <router-link to="muon-sach">Mượn sách</router-link>
       </li>
       <li>
-        <a href="#">Trả sách</a>
+        <router-link to="tra-sach">Trả sách</router-link>
       </li>
       <li>
-        <a href="#">Ghi nhận mất sách</a>
+        <router-link to="mat-sach">Ghi nhận mất sách</router-link>
       </li>
       <li>
         <a href="#">Lập phiếu thu tiền phạt</a>
@@ -43,13 +43,12 @@
 </template>
 
 <script>
-console.log("Menu");
 export default {
   name: "MenuItem",
 };
 </script>
 
-<style>
+<style scoped>
 body {
   font-family: "Tahoma", sans-serif;
   background: #fafafa;
@@ -62,6 +61,11 @@ a:focus {
   color: inherit;
   text-decoration: none;
   transition: all 0.3s;
+}
+
+.sidebar {
+  display: block;
+  float: left;
 }
 
 #sidebar {

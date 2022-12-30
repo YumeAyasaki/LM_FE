@@ -5,6 +5,9 @@ import ThemDocGia from "../views/ThemDocGia.vue";
 import ThemSach from "../views/ThemSach.vue";
 import TraCuuSach from "../views/TraCuuSach.vue";
 import MatSach from "../views/MatSach.vue";
+import MuonSach from "../views/MuonSach.vue";
+import TraSach from "../views/TraSach.vue";
+
 import HomePage from "../views/HomePage.vue";
 
 const routes = [
@@ -37,6 +40,16 @@ const routes = [
     path: "/mat-sach", ///path của route
     name: "MatSach", // tên route
     component: MatSach, // component route sử dụng
+  },
+  {
+    path: "/muon-sach", ///path của route
+    name: "MuonSach", // tên route
+    component: MuonSach, // component route sử dụng
+  },
+  {
+    path: "/tra-sach", ///path của route
+    name: "TraSach", // tên route
+    component: TraSach, // component route sử dụng
   },
 ];
 
