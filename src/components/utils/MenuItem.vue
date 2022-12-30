@@ -43,6 +43,7 @@
 </template>
 
 <script>
+console.log("Menu");
 export default {
   name: "MenuItem",
 };

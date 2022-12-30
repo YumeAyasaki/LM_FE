@@ -1,14 +1,15 @@
 import { createRouter, createWebHistory } from "vue-router";
-import ThemNhanVien from "../components/pages/ThemNhanVien.vue";
-import ThemDocGia from "../components/pages/ThemDocGia.vue";
-import ThemSach from "../components/pages/ThemSach.vue";
-import TraCuuSach from "../components/pages/TraCuuSach.vue";
-import MatSach from "../components/pages/MatSach.vue";
-import HomePage from "../components/pages/HomePage";
+
+import ThemNhanVien from "../views/ThemNhanVien.vue";
+import ThemDocGia from "../views/ThemDocGia.vue";
+import ThemSach from "../views/ThemSach.vue";
+import TraCuuSach from "../views/TraCuuSach.vue";
+import MatSach from "../views/MatSach.vue";
+import HomePage from "../views/HomePage.vue";
 
 const routes = [
   {
-    path: "/home",
+    path: "/",
     name: "HomePage",
     component: HomePage,
   },
@@ -38,6 +39,7 @@ const routes = [
     component: MatSach, // component route sử dụng
   },
 ];
+
 const router = createRouter({
   history: createWebHistory(),
   routes,

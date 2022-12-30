@@ -6,7 +6,9 @@
 </template>
 
 <script>
-import LayoutDefault from "../layouts/LayoutDefault.vue";
+import LayoutDefault from "../components/layouts/LayoutDefault.vue";
+
+console.log("Home");
 
 export default {
   name: "HomePage",
