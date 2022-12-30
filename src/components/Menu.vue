@@ -18,10 +18,10 @@
                     <router-link to="tra-cuu-sach">Tra cứu sách</router-link>
                 </li>
                 <li>
-                    <a href="#">Mượn sách</a>
+                    <router-link to="muon-sach">Mượn sách</router-link>
                 </li>
                 <li>
-                    <a href="#">Trả sách</a>
+                    <router-link to="tra-sach">Trả sách</router-link>
                 </li>
                 <li>
                     <router-link to="mat-sach">Ghi nhận mất sách</router-link>

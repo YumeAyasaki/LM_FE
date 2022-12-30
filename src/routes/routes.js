@@ -3,6 +3,8 @@ import ThemNhanVien from '../components/ThemNhanVien.vue';
 import ThemDocGia from '../components/ThemDocGia.vue';
 import ThemSach from '../components/ThemSach.vue';
 import TraCuuSach from '../components/TraCuuSach.vue';
+import MuonSach from '../components/MuonSach.vue';
+import TraSach from '../components/TraSach.vue';
 import MatSach from '../components/MatSach.vue';
 
 
@@ -30,6 +32,16 @@ const routes = [{
         path: '/mat-sach', ///path của route
         name: 'MatSach', // tên route
         component: MatSach // component route sử dụng
+    },
+    {
+        path: '/muon-sach', ///path của route
+        name: 'MuonSach', // tên route
+        component: MuonSach // component route sử dụng
+    },
+    {
+        path: '/tra-sach', ///path của route
+        name: 'TraSach', // tên route
+        component: TraSach // component route sử dụng
     },
 ]
 const router = createRouter({
