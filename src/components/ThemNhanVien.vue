@@ -77,6 +77,7 @@ export default {
             let url = "https://easy-gold-goshawk-vest.cyclic.app/Employee";
             await axios.post(url, formData).then(response => {
                     console.log(response);
+                    alert("Successfull!")
                 });
 
         }
