@@ -18,6 +18,8 @@ export default {
   text-align: center;
 }
 h1 {
+  /* width: 100%; */
+
   text-align: center;
   margin: 20px;
 }
