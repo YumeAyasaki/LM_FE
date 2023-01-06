@@ -30,8 +30,7 @@
 
                 <label>Người tiếp nhận: </label>
                 <select name="nguoi-tiep-nhan" id ="nguoi-tiep-nhan" class = "select-label" v-model="importer">
-                    <option>Nguyễn Văn A</option>
-                    <option>Trần Thị B</option>
+                    <option v-for="person in importers" :key="person">{{ person}}</option>
                 </select>
             
             <button class="btn"> Tiếp nhận</button>
@@ -40,6 +39,9 @@
 </template>
 
 <script>
+import axios from 'axios';
+
+
 export default {
     name: 'ThemSach',
     data() {
@@ -52,6 +54,7 @@ export default {
             inputDate: null,
             price: null,
             importer:'',
+            importers: [],
 
         };
     },
@@ -59,24 +62,43 @@ export default {
         async addBook(){
             if (new Date().getFullYear() - this.year <=8)
             {
-                let formData = new formData();
-                formData.append('name',this.name);
-                formData.append('genres',this.genres);
-                formData.append('author',this.author);
-                formData.append('year',this.year);
-                formData.append('publisher',this.publisher);
-                formData.append('inputDate',this.inputDate);
-                formData.append('price',this.price);
-                formData.append('importer',this.importer);
-                alert("zz");
+                const formData =  {
+                    name: this.name,
+                    genres: this.genres,
+                    author: this.author,
+                    year: this.year,
+                    publisher: this.publisher,
+                    inputDate: this.inputDate,
+                    price: this.price,
+                    importer:this.importer,
+                }
                 let url = "https://easy-gold-goshawk-vest.cyclic.app/Book";
                 await axios.post(url, formData).then((response) => {
                     console.log(response);
+                    alert("Successfull!")
                 });
             }
             else alert('Chỉ nhận sách xuất bản trong vòng 8 năm')
-        }
+        },
+        async getImporter() {
+            let url = "https://easy-gold-goshawk-vest.cyclic.app/Employee/department/Thủ Kho";
+            await axios.get(url).then(response => {
+
+                for (let item in response.data)
+                {
+                    this.importers.push(response.data[item].name);
+                    this.importer = this.importers[0];
+                }
+            })
     }
+    
+    },
+    created() {
+            this.getImporter();
+    },
+    mounted() {
+            console.log('Mounted!');
+    },
 }
 </script>
 <style scoped>
