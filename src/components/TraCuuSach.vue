@@ -12,7 +12,7 @@
         <table class = "table">
             <thead>
                 <tr>
-                    <th>STT</th>
+                    <th >STT</th>
                     <th>Mã sách</th>
                     <th>Tên sách</th>
                     <th>Thể loại</th>
@@ -23,7 +23,7 @@
 
             <tbody>
                 <tr v-for="book in listbook" :key="book">
-                    <td>1</td>
+                    <td>{{ listbook.indexOf(book) + 1 }}</td>
                     <td>{{book._id}}</td>
                     <td>{{book.name}}</td>
                     <td>{{book.genres}}</td>
@@ -57,10 +57,9 @@ export default {
                 this.listbook.push(response.data[item]);
             };
             console.log(this.listbook);
+            if (this.listbook.length == 0 ) alert('Khong tim thay sach')
             }     
             );
-            this.STT = - 100* this.listbook.length;
-
         },
     }
 }
