@@ -1,10 +1,10 @@
 <template>
     <div class="container">
         <h1> Tra cứu sách</h1>
-        <form>
+        <form  @submit.prevent="findBook">
 
                 <label>Tên sách: </label>
-                <input type="text" class = "text-input"/>
+                <input type="text" class = "text-input" v-model="key"/>
             
             <button class="btn"> Xem kết quả </button>
         </form>
@@ -22,40 +22,13 @@
             </thead>
 
             <tbody>
-                <tr>
+                <tr v-for="book in listbook" :key="book">
                     <td>1</td>
-                    <td>A123</td>
-                    <td>Sách Văn A</td>
-                    <td>Thể loại thị B</td>
-                    <td>Tác giả văn C</td>
-                    <td>Tình Trạng D</td>
-                </tr>
-
-                <tr>
-                    <td>1</td>
-                    <td>A123</td>
-                    <td>Sách Văn A</td>
-                    <td>Thể loại thị B</td>
-                    <td>Tác giả văn C</td>
-                    <td>Tình Trạng D</td>
-                </tr>
-
-                <tr>
-                    <td>1</td>
-                    <td>A123</td>
-                    <td>Sách Văn A</td>
-                    <td>Thể loại thị B</td>
-                    <td>Tác giả văn C</td>
-                    <td>Tình Trạng D</td>
-                </tr>
-
-                <tr>
-                    <td>1</td>
-                    <td>A123</td>
-                    <td>Sách Văn A</td>
-                    <td>Thể loại thị B</td>
-                    <td>Tác giả văn C</td>
-                    <td>Tình Trạng D</td>
+                    <td>{{book._id}}</td>
+                    <td>{{book.name}}</td>
+                    <td>{{book.genres}}</td>
+                    <td>{{book.author}}</td>
+                    <td>{{book.state}}</td>
                 </tr>
             </tbody>
         </table>
@@ -63,8 +36,33 @@
 </template>
 
 <script>
+import axios from 'axios';
+
 export default {
-    name: 'TraCuuSach'
+    name: 'TraCuuSach',
+    data() {
+        return {
+            key:'',
+            STT: 1,
+            listbook: [],
+        };
+    },
+    methods :{
+        async findBook(){
+            this.listbook = [];
+            let url = "https://easy-gold-goshawk-vest.cyclic.app/Book/?name=" + this.key;
+            await axios.get(url).then(response => {
+            for (let item in response.data)
+            {
+                this.listbook.push(response.data[item]);
+            };
+            console.log(this.listbook);
+            }     
+            );
+            this.STT = - 100* this.listbook.length;
+
+        },
+    }
 }
 </script>
 <style scoped>
