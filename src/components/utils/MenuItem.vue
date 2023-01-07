@@ -43,6 +43,14 @@
 </template>
 
 <script>
+const token = localStorage.getItem("token");
+if (token == null) {
+  // haven't login
+} else {
+  // login
+}
+console.log("Token: ", token);
+
 export default {
   name: "MenuItem",
 };

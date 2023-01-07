@@ -2,7 +2,7 @@
   <div class="ThuTienPhat">
     <TitleItem title="Thu tiền phạt" />
     <div>{{ form }}</div>
-    <form>
+    <form @submit="handleSubmit">
       <div>
         <label>Họ và tên</label>
         <input v-model="form.name" />
@@ -23,7 +23,7 @@
         <label>Người thu tiền</label>
         <input v-model="form.employee" />
       </div>
-      <button @click="submit">Lập phiếu thu tiền phạt</button>
+      <button type="submit">Lập phiếu thu tiền phạt</button>
     </form>
   </div>
 </template>
@@ -31,7 +31,6 @@
 <script>
 import LayoutDefault from "../components/layouts/LayoutDefault.vue";
 import TitleItem from "../components/utils/TitleItem.vue";
-import axios from "axios";
 
 console.log(import.meta.env.VITE_BACKEND_LOCAL);
 
@@ -53,9 +52,10 @@ export default {
     };
   },
   methods: {
-    async submit() {
-      this.$emit("submit", this.form);
-      axios.post();
+    async handleSubmit(e) {
+      e.preventDefault();
+      console.log("Submit");
+      console.log(this.form);
     },
   },
 };

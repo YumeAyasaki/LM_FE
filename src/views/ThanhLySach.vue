@@ -41,7 +41,6 @@ import TitleItem from "../components/utils/TitleItem.vue";
 
 console.log("ThanhLySach");
 
-console.log(import.meta.env.VITE_BACKEND_LOCAL);
 const url = import.meta.env.VITE_BACKEND_LOCAL;
 
 export default {

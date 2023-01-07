@@ -1,11 +1,16 @@
 <template>
   <div class="container">
-    <h1>Tra cứu sách</h1>
+    <TitleItem title="Tra cứu sách" />
+    <div>{{ items }}</div>
+    <div>{{ bookName }}</div>
     <form>
-      <label>Tên sách: </label>
-      <input type="text" class="text-input" />
-
-      <button class="btn">Xem kết quả</button>
+      <div>
+        <label>Tên sách: </label>
+        <input v-model="bookName" class="text-input" />
+      </div>
+      <button v-on:click="handleSubmit" type="submit" class="btn">
+        Xem kết quả
+      </button>
     </form>
 
     <table class="table">
@@ -21,40 +26,13 @@
       </thead>
 
       <tbody>
-        <tr>
-          <td>1</td>
-          <td>A123</td>
-          <td>Sách Văn A</td>
-          <td>Thể loại thị B</td>
-          <td>Tác giả văn C</td>
-          <td>Tình Trạng D</td>
-        </tr>
-
-        <tr>
-          <td>1</td>
-          <td>A123</td>
-          <td>Sách Văn A</td>
-          <td>Thể loại thị B</td>
-          <td>Tác giả văn C</td>
-          <td>Tình Trạng D</td>
-        </tr>
-
-        <tr>
-          <td>1</td>
-          <td>A123</td>
-          <td>Sách Văn A</td>
-          <td>Thể loại thị B</td>
-          <td>Tác giả văn C</td>
-          <td>Tình Trạng D</td>
-        </tr>
-
-        <tr>
-          <td>1</td>
-          <td>A123</td>
-          <td>Sách Văn A</td>
-          <td>Thể loại thị B</td>
-          <td>Tác giả văn C</td>
-          <td>Tình Trạng D</td>
+        <tr v-for="item in items" :key="item._id">
+          <td>{{ item.order }}</td>
+          <td>{{ item._id }}</td>
+          <td>{{ item.name }}</td>
+          <td>{{ item.genres }}</td>
+          <td>{{ item.author }}</td>
+          <td>{{ item.state }}</td>
         </tr>
       </tbody>
     </table>
@@ -62,8 +40,30 @@
 </template>
 
 <script>
+import LayoutDefault from "../components/layouts/LayoutDefault.vue";
+import TitleItem from "../components/utils/TitleItem.vue";
+import bookApi from "../components/api/bookAPI";
+
 export default {
   name: "TraCuuSach",
+  components: { TitleItem },
+  created() {
+    this.$emit("update:layout", LayoutDefault);
+  },
+  data: function () {
+    return {
+      items: [],
+      bookName: "",
+    };
+  },
+  methods: {
+    async handleSubmit(e) {
+      e.preventDefault();
+      console.log("Submit");
+      console.log(this.form);
+      this.items = await bookApi.getAll();
+    },
+  },
 };
 </script>
 <style scoped>

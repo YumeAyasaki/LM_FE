@@ -1,8 +1,7 @@
 <template>
   <div class="LayoutDefault">
     <div class="LayoutDefault__header">
-      Header
-      <!-- Header -->
+      <NavBar />
     </div>
     <main class="LayoutDefault__main">
       <MenuItem class="LayoutDefault__menu" />
@@ -16,12 +15,12 @@
 
 <script>
 import MenuItem from "../utils/MenuItem.vue";
-
-console.log("Layout");
+import NavBar from "../utils/NavBar.vue";
 
 export default {
   components: {
     MenuItem,
+    NavBar,
   },
 };
 </script>
@@ -31,8 +30,6 @@ export default {
   min-width: 100%;
 }
 .LayoutDefault__header {
-  width: 100%;
-  background-color: black;
 }
 .LayoutDefault__main {
   display: flex;
