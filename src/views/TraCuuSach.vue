@@ -1,8 +1,6 @@
 <template>
   <div class="container">
     <TitleItem title="Tra cứu sách" />
-    <div>{{ items }}</div>
-    <div>{{ bookName }}</div>
     <form>
       <div>
         <label>Tên sách: </label>
@@ -26,8 +24,8 @@
       </thead>
 
       <tbody>
-        <tr v-for="item in items" :key="item._id">
-          <td>{{ item.order }}</td>
+        <tr v-for="{ item, index } in items" :key="item._id">
+          <td>{{ index + 1 }}</td>
           <td>{{ item._id }}</td>
           <td>{{ item.name }}</td>
           <td>{{ item.genres }}</td>
@@ -42,7 +40,7 @@
 <script>
 import LayoutDefault from "../components/layouts/LayoutDefault.vue";
 import TitleItem from "../components/utils/TitleItem.vue";
-import bookApi from "../components/api/bookAPI";
+import bookApi from "../components/api/book";
 
 export default {
   name: "TraCuuSach",
@@ -59,9 +57,9 @@ export default {
   methods: {
     async handleSubmit(e) {
       e.preventDefault();
-      console.log("Submit");
-      console.log(this.form);
-      this.items = await bookApi.getAll();
+      this.items = await bookApi.findByName(this.bookName, "").then((obj) => {
+        return obj.data;
+      });
     },
   },
 };

@@ -1,32 +1,43 @@
 <template>
   <div class="container">
     <h1>Lập thẻ độc giả</h1>
-    <form>
+    <form @submit.prevent="addReader">
       <label>Họ và tên: </label>
-      <input type="text" class="text-input" />
+      <input type="text" class="text-input" v-model="name" />
 
       <label>Ngày sinh: </label>
-      <input type="date" class="date-input" />
+      <input type="date" class="date-input" v-model="dateOfBirth" />
 
       <label>Loại độc giả: </label>
-      <select name="loai-doc-gia" id="loai-doc-gia" class="select-label">
-        <option>x</option>
-        <option>y</option>
+      <select
+        name="loai-doc-gia"
+        id="loai-doc-gia"
+        class="select-label"
+        v-model="type"
+      >
+        <option>X</option>
+        <option>Y</option>
       </select>
 
       <label>Email: </label>
-      <input type="text" class="text-input" />
+      <input type="text" class="text-input" v-model="email" />
 
       <label>Địa chỉ: </label>
-      <input type="text" class="text-input" />
+      <input type="text" class="text-input" v-model="address" />
 
       <label>Ngày lập thẻ: </label>
-      <input type="date" class="date-input" />
+      <input type="date" class="date-input" v-model="createAt" />
 
       <label>Người lập thẻ: </label>
-      <select name="nguoi-lap-the" id="nguoi-lap-the" class="select-label">
-        <option>Nguyễn Văn A</option>
-        <option>Trần Thị B</option>
+      <select
+        name="nguoi-lap-the"
+        id="nguoi-lap-the"
+        class="select-label"
+        v-model="createPerson"
+      >
+        <option v-for="person in createPersons" :key="person">
+          {{ person }}
+        </option>
       </select>
 
       <button class="btn">Lập thẻ</button>
@@ -35,12 +46,63 @@
 </template>
 
 <script>
-import LayoutDefault from "../components/layouts/LayoutDefault.vue";
+import axios from "axios";
 
 export default {
   name: "ThemDocGia",
+  data() {
+    return {
+      name: "",
+      type: "X",
+      email: null,
+      dateOfBirth: null,
+      address: "",
+      createAt: null,
+      createPerson: "",
+      createPersons: [],
+    };
+  },
+  methods: {
+    async addReader() {
+      const age =
+        new Date().getFullYear() - parseInt(this.dateOfBirth.slice(0, 4));
+
+      if (18 <= age && age <= 55) {
+        const formData = {
+          name: this.name,
+          type: this.type,
+          email: this.email,
+          dateOfBirth: this.dateOfBirth,
+          address: this.address,
+          createAt: this.createAt,
+          createPerson: this.createPerson,
+        };
+        let url = "https://easy-gold-goshawk-vest.cyclic.app/Reader";
+        await axios.post(url, formData).then((response) => {
+          console.log(response);
+          alert("Successfull!");
+        });
+      } else alert("Tuổi độc giả phải từ 18 đến 55");
+    },
+
+    async getCreatePerson() {
+      let url =
+        "https://easy-gold-goshawk-vest.cyclic.app/Employee/department/Thủ Thư";
+      await axios.get(url).then((response) => {
+        for (let item in response.data) {
+          this.createPersons.push(response.data[item].name);
+          this.createPerson = this.createPersons[0];
+        }
+      });
+    },
+  },
+
   created() {
-    this.$emit("update:layout", LayoutDefault);
+    this.getCreatePerson();
+  },
+
+  mounted() {
+    console.log("Mounted!");
   },
 };
 </script>
