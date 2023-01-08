@@ -1,11 +1,11 @@
 <template>
   <div class="container">
-    <h1>Mượn sách</h1>
+    <TitleItem title="Mượn sách" />
     <form>
       <label>Tên sách: </label>
-      <input type="text" class="text-input" />
+      <input v-model="bookName" type="text" class="text-input" />
 
-      <button class="btn">Xem kết quả</button>
+      <button v-on:click.prevent="handleSubmit" class="btn">Xem kết quả</button>
     </form>
 
     <table class="table">
@@ -21,40 +21,13 @@
       </thead>
 
       <tbody>
-        <tr>
-          <td>1</td>
-          <td>A123</td>
-          <td>Sách Văn A</td>
-          <td>Thể loại thị B</td>
-          <td>Tác giả văn C</td>
-          <td>Tình Trạng D</td>
-        </tr>
-
-        <tr>
-          <td>1</td>
-          <td>A123</td>
-          <td>Sách Văn A</td>
-          <td>Thể loại thị B</td>
-          <td>Tác giả văn C</td>
-          <td>Tình Trạng D</td>
-        </tr>
-
-        <tr>
-          <td>1</td>
-          <td>A123</td>
-          <td>Sách Văn A</td>
-          <td>Thể loại thị B</td>
-          <td>Tác giả văn C</td>
-          <td>Tình Trạng D</td>
-        </tr>
-
-        <tr>
-          <td>1</td>
-          <td>A123</td>
-          <td>Sách Văn A</td>
-          <td>Thể loại thị B</td>
-          <td>Tác giả văn C</td>
-          <td>Tình Trạng D</td>
+        <tr v-for="(item, index) in items" :key="item._id">
+          <td>{{ index }}</td>
+          <td>{{ item.id }}</td>
+          <td>{{ item.name }}</td>
+          <td>{{ item.genres }}</td>
+          <td>{{ item.author }}</td>
+          <td>{{ item.state }}</td>
         </tr>
       </tbody>
     </table>
@@ -63,11 +36,28 @@
 
 <script>
 import LayoutDefault from "../components/layouts/LayoutDefault.vue";
+import TitleItem from "../components/utils/TitleItem.vue";
+
+import bookApi from "../components/api/book";
 
 export default {
   name: "MuonSach",
+  components: { TitleItem },
   created() {
     this.$emit("update:layout", LayoutDefault);
+  },
+  data: function () {
+    return {
+      items: [],
+      bookName: "",
+    };
+  },
+  methods: {
+    async handleSubmit() {
+      await bookApi.findByName(this.bookName, "").then((res) => {
+        this.items = res.data;
+      });
+    },
   },
 };
 </script>

@@ -6,7 +6,7 @@
         <label>Tên sách: </label>
         <input v-model="bookName" class="text-input" />
       </div>
-      <button v-on:click="handleSubmit" type="submit" class="btn">
+      <button v-on:click.prevent="handleSubmit" type="submit" class="btn">
         Xem kết quả
       </button>
     </form>
@@ -24,9 +24,9 @@
       </thead>
 
       <tbody>
-        <tr v-for="{ item, index } in items" :key="item._id">
-          <td>{{ index + 1 }}</td>
-          <td>{{ item._id }}</td>
+        <tr v-for="(item, index) in items" :key="item._id">
+          <td>{{ index }}</td>
+          <td>{{ item.id }}</td>
           <td>{{ item.name }}</td>
           <td>{{ item.genres }}</td>
           <td>{{ item.author }}</td>
@@ -55,10 +55,9 @@ export default {
     };
   },
   methods: {
-    async handleSubmit(e) {
-      e.preventDefault();
-      this.items = await bookApi.findByName(this.bookName, "").then((obj) => {
-        return obj.data;
+    async handleSubmit() {
+      await bookApi.findByName(this.bookName, "").then((res) => {
+        this.items = res.data;
       });
     },
   },

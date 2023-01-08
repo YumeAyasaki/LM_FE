@@ -3,14 +3,14 @@
     <h1>Tiếp nhận sách mới</h1>
     <form form @submit.prevent="addBook">
       <label>Tên sách: </label>
-      <input type="text" class="text-input" v-model="name" />
+      <input type="text" class="text-input" v-model="form.name" />
 
       <label>Thể loại: </label>
       <select
         name="the-loai"
         id="the-loai"
         class="select-label"
-        v-model="genres"
+        v-model="form.genres"
       >
         <option>A</option>
         <option>B</option>
@@ -18,26 +18,31 @@
       </select>
 
       <label>Tác giả </label>
-      <input type="text" class="text-input" v-model="author" />
+      <input type="text" class="text-input" v-model="form.author" />
 
       <label>Năm xuất bản: </label>
-      <input type="number" class="text-input" v-model="year" />
+      <input type="number" class="text-input" v-model="form.year" />
 
       <label>Nhà xuất bản: </label>
-      <input type="text" class="text-input" v-model="publisher" />
+      <input type="text" class="text-input" v-model="form.publisher" />
 
       <label>Ngày nhập: </label>
-      <input type="date" class="date-input" v-model="inputDate" />
+      <input type="date" class="date-input" v-model="form.inputDate" />
 
       <label>Trị giá: </label>
-      <input type="number" step="0.01" class="text-input" v-model="price" />
+      <input
+        type="number"
+        step="0.01"
+        class="text-input"
+        v-model="form.price"
+      />
 
       <label>Người tiếp nhận: </label>
       <select
         name="nguoi-tiep-nhan"
         id="nguoi-tiep-nhan"
         class="select-label"
-        v-model="importer"
+        v-model="form.importer"
       >
         <option v-for="person in importers" :key="person">{{ person }}</option>
       </select>
@@ -48,56 +53,48 @@
 </template>
 
 <script>
-import axios from "axios";
+import LayoutDefault from "../components/layouts/LayoutDefault.vue";
+
+import bookAPI from "../components/api/book";
+import employeeAPI from "../components/api/employee";
 
 export default {
   name: "ThemSach",
+  created() {
+    this.$emit("update:layout", LayoutDefault);
+    this.getImporter();
+  },
   data() {
     return {
-      name: "",
-      genres: "A",
-      author: "",
-      year: null,
-      publisher: "",
-      inputDate: null,
-      price: null,
-      importer: "",
+      form: {
+        name: "",
+        genres: "A",
+        author: "",
+        year: null,
+        publisher: "",
+        inputDate: null,
+        price: null,
+        importer: "",
+      },
       importers: [],
     };
   },
   methods: {
     async addBook() {
       if (new Date().getFullYear() - this.year <= 8) {
-        const formData = {
-          name: this.name,
-          genres: this.genres,
-          author: this.author,
-          year: this.year,
-          publisher: this.publisher,
-          inputDate: this.inputDate,
-          price: this.price,
-          importer: this.importer,
-        };
-        let url = "https://easy-gold-goshawk-vest.cyclic.app/Book";
-        await axios.post(url, formData).then((response) => {
-          console.log(response);
-          alert("Successfull!");
+        await bookAPI.create(this.form).then((res) => {
+          if (res.status == 200) alert("Successfull!");
         });
       } else alert("Chỉ nhận sách xuất bản trong vòng 8 năm");
     },
     async getImporter() {
-      let url =
-        "https://easy-gold-goshawk-vest.cyclic.app/Employee/department/Thủ Kho";
-      await axios.get(url).then((response) => {
+      await employeeAPI.getEmployeeByDepartment("Thủ Kho").then((response) => {
         for (let item in response.data) {
           this.importers.push(response.data[item].name);
-          this.importer = this.importers[0];
+          this.form.importer = this.importers[0];
         }
       });
     },
-  },
-  created() {
-    this.getImporter();
   },
   mounted() {
     console.log("Mounted!");

@@ -11,7 +11,7 @@ const employeeAPI = {
     const url = `${baseURL}/${model}/name/${name}`;
     return get(url, token);
   },
-  findEmployeeByDepartment: (department, token) => {
+  getEmployeeByDepartment: (department, token) => {
     const url = `${baseURL}/${model}/department/${department}`;
     return get(url, token);
   },

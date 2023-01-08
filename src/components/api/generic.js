@@ -1,5 +1,5 @@
 import axios from "axios";
-export const baseURL = import.meta.env.VITE_BACKEND_LOCAL;
+export const baseURL = import.meta.env.VITE_BACKEND;
 
 export const config = function (token) {
   return {

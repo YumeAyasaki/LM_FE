@@ -29,8 +29,6 @@ export default {
 .LayoutDefault {
   min-width: 100%;
 }
-.LayoutDefault__header {
-}
 .LayoutDefault__main {
   display: flex;
   margin: 0%;
