@@ -7,16 +7,12 @@
         <input type="text" class="text-input" v-model="form.name" />
       </div>
       <div>
-        <label>Tiền nợ</label>
+        <label>Tiền nợ thêm</label>
         <input type="number" class="text-input" v-model.number="form.debt" />
       </div>
       <div>
         <label>Số tiền thu</label>
         <input type="number" class="text-input" v-model.number="form.money" />
-      </div>
-      <div>
-        <label>Còn lại</label>
-        <input type="number" class="text-input" v-model.number="form.remain" />
       </div>
       <div>
         <label>Người thu tiền</label>
@@ -56,7 +52,6 @@ export default {
         name: "",
         debt: 0,
         money: 0,
-        remain: 0,
         employee: "",
       },
       employees: [],
@@ -66,20 +61,22 @@ export default {
     async handleSubmit() {
       await readerAPI.getReaderByName(this.form.name, "").then((res) => {
         let reader = {
-          email: res.data.email,
-          address: res.data.address,
-          createAt: res.data.createAt,
-          totalLoan: res.data.totalLoan,
-          name: res.data.name,
-          type: res.data.type,
-          dateOfBirth: res.data.dateOfBirth,
-          createPerson: res.data.createPerson,
+          _id: res.data[0]._id,
+          email: res.data[0].email,
+          address: res.data[0].address,
+          createAt: res.data[0].createAt,
+          totalLoan: res.data[0].totalLoan + this.form.debt - this.form.money,
+          name: res.data[0].name,
+          type: res.data[0].type,
+          dateOfBirth: res.data[0].dateOfBirth,
+          createPerson: res.data[0].createPerson,
         };
-        readerAPI.update(res.data.id, reader, "");
+        readerAPI.update("", reader, "");
       });
     },
     async getEmployees() {
       await employeeAPI.getEmployeeByDepartment("Thủ Thư").then((response) => {
+        console.log(response);
         for (let item in response.data) {
           this.employees.push(response.data[item].name);
           this.form.employee = this.employees[0];

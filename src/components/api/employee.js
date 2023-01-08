@@ -13,6 +13,7 @@ const employeeAPI = {
   },
   getEmployeeByDepartment: (department, token) => {
     const url = `${baseURL}/${model}/department/${department}`;
+    console.log(url);
     return get(url, token);
   },
 

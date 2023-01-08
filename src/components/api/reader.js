@@ -17,6 +17,7 @@ const readerAPI = {
   },
   update: (id, data, token) => {
     const url = `${baseURL}/${model}/${id}`;
+    console.log(url);
     return put(url, data, token);
   },
   deleteReader: (id, token) => {
