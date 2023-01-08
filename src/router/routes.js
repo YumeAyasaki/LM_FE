@@ -7,6 +7,7 @@ import TraCuuSach from "../views/TraCuuSach.vue";
 import MatSach from "../views/MatSach.vue";
 import MuonSach from "../views/MuonSach.vue";
 import TraSach from "../views/TraSach.vue";
+import EditBook from "../views/EditBook.vue";
 
 import ThuTienPhat from "../views/PhieuThuTienPhat.vue";
 import ThanhLySach from "../views/ThanhLySach.vue";
@@ -75,6 +76,11 @@ const routes = [
     path: "/quan-ly",
     name: "QuanLy",
     component: QuanLy,
+  },
+  {
+    path: "/EditBook/:id?", ///path của route
+    name: "EditBook", // tên route
+    component: EditBook, // component route sử dụng
   },
 ];
 

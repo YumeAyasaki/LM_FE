@@ -1,9 +1,9 @@
 <template>
   <div class="container">
-    <TitleItem title="Sửa thông tin sách" />
+    <h1>Sửa thông tin sách</h1>
     <form form @submit.prevent="addBook">
       <label>Tên sách: </label>
-      <input type="text" class="text-input" v-model="form.name" />
+      <input type="text" class="text-input" v-model="name" />
 
       <label>Thể loại: </label>
       <select
@@ -18,31 +18,26 @@
       </select>
 
       <label>Tác giả </label>
-      <input type="text" class="text-input" v-model="form.author" />
+      <input type="text" class="text-input" v-model="author" />
 
       <label>Năm xuất bản: </label>
-      <input type="number" class="text-input" v-model="form.year" />
+      <input type="number" class="text-input" v-model="year" />
 
       <label>Nhà xuất bản: </label>
-      <input type="text" class="text-input" v-model="form.publisher" />
+      <input type="text" class="text-input" v-model="publisher" />
 
       <label>Ngày nhập: </label>
-      <input type="date" class="date-input" v-model="form.inputDate" />
+      <input type="date" class="date-input" v-model="inputDate" />
 
       <label>Trị giá: </label>
-      <input
-        type="number"
-        step="0.01"
-        class="text-input"
-        v-model="form.price"
-      />
+      <input type="number" step="0.01" class="text-input" v-model="price" />
 
       <label>Người tiếp nhận: </label>
       <select
         name="nguoi-tiep-nhan"
         id="nguoi-tiep-nhan"
         class="select-label"
-        v-model="form.importer"
+        v-model="importer"
       >
         <option v-for="person in importers" :key="person">{{ person }}</option>
       </select>
@@ -53,52 +48,62 @@
 </template>
 
 <script>
-import TitleItem from "../components/utils/TitleItem.vue";
-
-import bookAPI from "../components/api/book";
-import employeeAPI from "../components/api/employee";
+import axios from "axios";
 
 export default {
   name: "EditBook",
-  components: { TitleItem },
   data() {
     return {
-      form: {
-        name: "",
-        genres: "A",
-        author: "",
-        year: null,
-        publisher: "",
-        inputDate: null,
-        price: null,
-        importer: "",
-      },
+      name: "",
+      genres: "A",
+      author: "",
+      year: null,
+      publisher: "",
+      inputDate: null,
+      price: null,
+      importer: "",
       importers: [],
     };
   },
   methods: {
     async addBook() {
       if (new Date().getFullYear() - this.year <= 8) {
-        await bookAPI
-          .getBookById(this.$route.params.id, "")
-          .then((response) => {
-            console.log(response);
-            alert("Successfull!");
-          });
+        const formData = {
+          name: this.name,
+          genres: this.genres,
+          author: this.author,
+          year: this.year,
+          publisher: this.publisher,
+          inputDate: this.inputDate,
+          price: this.price,
+          importer: this.importer,
+        };
+        let url =
+          "https://easy-gold-goshawk-vest.cyclic.app/Book/" +
+          this.$route.params.id;
+        console.log(url);
+        await axios.put(url, formData).then((response) => {
+          console.log(response);
+          alert("Successfull!");
+        });
       } else alert("Chỉ nhận sách xuất bản trong vòng 8 năm");
     },
     async getImporter() {
-      await employeeAPI
-        .getEmployeeByDepartment("Thủ Kho", "")
-        .then((response) => {
-          for (let item in response.data) {
-            this.importers.push(response.data[item].name);
-            this.importer = this.importers[0];
-          }
-        });
+      let url =
+        "https://easy-gold-goshawk-vest.cyclic.app/Employee/department/Thủ Kho";
+      await axios.get(url).then((response) => {
+        for (let item in response.data) {
+          this.importers.push(response.data[item].name);
+          this.importer = this.importers[0];
+        }
+      });
     },
-    async getBook() {
-      await bookAPI.getBookById(this.$route.params.id, "").then((response) => {
+    async getBookById() {
+      console.log(this.$route.params.id);
+      let url =
+        "https://easy-gold-goshawk-vest.cyclic.app/Book/" +
+        this.$route.params.id;
+      await axios.get(url).then((response) => {
         for (let item in response.data) {
           this.name = response.data[item].name;
           this.genres = response.data[item].genres;
@@ -113,7 +118,7 @@ export default {
     },
   },
   created() {
-    this.getBook();
+    this.getBookById();
     this.getImporter();
   },
 };
