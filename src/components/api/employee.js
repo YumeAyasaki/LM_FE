@@ -8,7 +8,7 @@ const employeeAPI = {
     return post(url, data, token);
   },
   getEmployeeByName: (name, token) => {
-    const url = `${baseURL}/${model}/name/${name}`;
+    const url = `${baseURL}/${model}/?name=${name}`;
     return get(url, token);
   },
   getEmployeeByDepartment: (department, token) => {

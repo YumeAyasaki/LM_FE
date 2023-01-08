@@ -30,15 +30,11 @@
 </template>
 
 <script>
-import LayoutDefault from "../components/layouts/LayoutDefault.vue";
 import TitleItem from "../components/utils/TitleItem.vue";
 
 export default {
   name: "ThuTienPhat",
   components: { TitleItem },
-  created() {
-    this.$emit("update:layout", LayoutDefault);
-  },
   data: function () {
     return {
       form: {

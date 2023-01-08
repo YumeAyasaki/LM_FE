@@ -36,18 +36,12 @@
 </template>
 
 <script>
-import LayoutDefault from "../components/layouts/LayoutDefault.vue";
 import TitleItem from "../components/utils/TitleItem.vue";
 
 console.log("ThanhLySach");
 
-const url = import.meta.env.VITE_BACKEND_LOCAL;
-
 export default {
   name: "ThanhLySach",
-  created() {
-    this.$emit("update:layout", LayoutDefault);
-  },
   components: { TitleItem },
   data: function () {
     return {

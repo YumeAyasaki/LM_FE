@@ -17,7 +17,7 @@ const bookAPI = {
     return get(url, token);
   },
   findByName: (name, token) => {
-    const url = `${baseURL}/${model}/name/${name}`;
+    const url = `${baseURL}/${model}/?name=${name}`;
     return get(url, token);
   },
   loan: (id, data, token) => {

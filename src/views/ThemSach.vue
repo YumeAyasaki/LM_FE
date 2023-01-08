@@ -53,15 +53,12 @@
 </template>
 
 <script>
-import LayoutDefault from "../components/layouts/LayoutDefault.vue";
-
 import bookAPI from "../components/api/book";
 import employeeAPI from "../components/api/employee";
 
 export default {
   name: "ThemSach",
   created() {
-    this.$emit("update:layout", LayoutDefault);
     this.getImporter();
   },
   data() {

@@ -62,14 +62,10 @@
 </template>
 
 <script>
-import LayoutDefault from "../components/layouts/LayoutDefault.vue";
 import employeeAPI from "../components/api/employee";
 
 export default {
   name: "ThemNhanVien",
-  created() {
-    this.$emit("update:layout", LayoutDefault);
-  },
   data() {
     return {
       form: {

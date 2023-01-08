@@ -60,7 +60,7 @@
 </template>
 
 <script>
-import axios from "axios";
+import bookLoanAPI from "../components/api/bookLoan";
 
 export default {
   name: "TraSach",
@@ -77,9 +77,7 @@ export default {
   methods: {
     async viewLoanBook() {
       this.listbook = [];
-      let url =
-        "https://easy-gold-goshawk-vest.cyclic.app/BookLoan/" + this.reader_id;
-      await axios.get(url).then((response) => {
+      await bookLoanAPI.viewByReaderId(this.reader_id).then((response) => {
         for (let item in response.data) {
           this.listbook.push(response.data[item]);
         }
@@ -98,8 +96,7 @@ export default {
           book: this.listbook[i]._id,
         };
         console.log(Data);
-        let url = "https://easy-gold-goshawk-vest.cyclic.app/BookLoan";
-        await axios.put(url, Data).then((response) => {
+        await bookLoanAPI.returnBook("", Data, "").then((response) => {
           console.log(response);
         });
       }

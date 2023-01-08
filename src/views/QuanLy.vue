@@ -6,14 +6,7 @@
 </template>
 
 <script>
-import LayoutDefault from "../components/layouts/LayoutDefault.vue";
-
-console.log("QuanLy");
-
 export default {
   name: "QuanLy",
-  created() {
-    this.$emit("update:layout", LayoutDefault);
-  },
 };
 </script>

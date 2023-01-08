@@ -56,7 +56,6 @@ export default {
   data() {
     return {
       key: "",
-      STT: 1,
       listbook: [],
     };
   },

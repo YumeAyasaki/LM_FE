@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <h1>Sửa thông tin sách</h1>
+    <TitleItem title="Sửa thông tin sách" />
     <form form @submit.prevent="addBook">
       <label>Tên sách: </label>
       <input type="text" class="text-input" v-model="form.name" />
@@ -53,10 +53,14 @@
 </template>
 
 <script>
-import axios from "axios";
+import TitleItem from "../components/utils/TitleItem.vue";
+
+import bookAPI from "../components/api/book";
+import employeeAPI from "../components/api/employee";
 
 export default {
   name: "EditBook",
+  components: { TitleItem },
   data() {
     return {
       form: {
@@ -75,32 +79,26 @@ export default {
   methods: {
     async addBook() {
       if (new Date().getFullYear() - this.year <= 8) {
-        let url =
-          "https://easy-gold-goshawk-vest.cyclic.app/Book/" +
-          this.$route.params.id;
-        console.log(url);
-        await axios.put(url, this.form).then((response) => {
-          console.log(response);
-          alert("Successfull!");
-        });
+        await bookAPI
+          .getBookById(this.$route.params.id, "")
+          .then((response) => {
+            console.log(response);
+            alert("Successfull!");
+          });
       } else alert("Chỉ nhận sách xuất bản trong vòng 8 năm");
     },
     async getImporter() {
-      let url =
-        "https://easy-gold-goshawk-vest.cyclic.app/Employee/department/Thủ Kho";
-      await axios.get(url).then((response) => {
-        for (let item in response.data) {
-          this.importers.push(response.data[item].name);
-          this.importer = this.importers[0];
-        }
-      });
+      await employeeAPI
+        .getEmployeeByDepartment("Thủ Kho", "")
+        .then((response) => {
+          for (let item in response.data) {
+            this.importers.push(response.data[item].name);
+            this.importer = this.importers[0];
+          }
+        });
     },
-    async getBookById() {
-      console.log(this.$route.params.id);
-      let url =
-        "https://easy-gold-goshawk-vest.cyclic.app/Book/" +
-        this.$route.params.id;
-      await axios.get(url).then((response) => {
+    async getBook() {
+      await bookAPI.getBookById(this.$route.params.id, "").then((response) => {
         for (let item in response.data) {
           this.name = response.data[item].name;
           this.genres = response.data[item].genres;
@@ -115,7 +113,7 @@ export default {
     },
   },
   created() {
-    this.getBookById();
+    this.getBook();
     this.getImporter();
   },
 };

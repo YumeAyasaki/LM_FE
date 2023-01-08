@@ -52,7 +52,8 @@
 </template>
 
 <script>
-import axios from "axios";
+import bookAPI from "../components/api/book";
+import bookloanAPI from "../components/api/bookLoan";
 
 export default {
   name: "MuonSach",
@@ -66,9 +67,7 @@ export default {
   },
   methods: {
     async addBook() {
-      let url =
-        "https://easy-gold-goshawk-vest.cyclic.app/Book/" + this.id_sach;
-      await axios.get(url).then((response) => {
+      await bookAPI.findById(this.id_sach).then((response) => {
         for (let item in response.data) {
           this.listbook.push(response.data[item]);
         }
@@ -87,8 +86,7 @@ export default {
           book: this.listbook[i]._id,
         };
         console.log(Data);
-        let url = "https://easy-gold-goshawk-vest.cyclic.app/BookLoan";
-        await axios.post(url, Data).then((response) => {
+        await bookloanAPI.loan(Data, "").then((response) => {
           console.log(response);
         });
       }

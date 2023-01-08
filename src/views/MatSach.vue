@@ -38,7 +38,8 @@
 </template>
 
 <script>
-import axios from "axios";
+import employeeAPI from "../components/api/employee";
+import lostBookAPI from "../components/api/lostBook";
 
 export default {
   name: "MatSach",
@@ -58,14 +59,14 @@ export default {
   },
   methods: {
     async getCreatePerson() {
-      let url =
-        "https://easy-gold-goshawk-vest.cyclic.app/Employee/department/Thủ Thư";
-      await axios.get(url).then((response) => {
-        for (let item in response.data) {
-          this.employees.push(response.data[item].name);
-          this.employee = this.employees[0];
-        }
-      });
+      await employeeAPI
+        .getEmployeeByDepartment("Thủ Thư", "")
+        .then((response) => {
+          for (let item in response.data) {
+            this.employees.push(response.data[item].name);
+            this.employee = this.employees[0];
+          }
+        });
     },
     async GhiNhanMatSach() {
       const Data = {
@@ -77,8 +78,7 @@ export default {
         employee: this.employee,
         compensation: this.compensation,
       };
-      let url = "https://easy-gold-goshawk-vest.cyclic.app/LostBook";
-      await axios.post(url, Data).then((response) => {
+      await lostBookAPI.create(Data, "").then((response) => {
         console.log(response);
         alert("Successfull!");
       });
