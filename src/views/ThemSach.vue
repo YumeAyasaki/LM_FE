@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <h1>Tiếp nhận sách mới</h1>
+    <TitleItem title="Tiếp nhận sách mới" />
     <form form @submit.prevent="addBook">
       <label>Tên sách: </label>
       <input type="text" class="text-input" v-model="form.name" />
@@ -53,6 +53,8 @@
 </template>
 
 <script>
+import TitleItem from "../components/utils/TitleItem.vue";
+
 import bookAPI from "../components/api/book";
 import employeeAPI from "../components/api/employee";
 
@@ -76,9 +78,10 @@ export default {
       importers: [],
     };
   },
+  components: { TitleItem },
   methods: {
     async addBook() {
-      if (new Date().getFullYear() - this.year <= 8) {
+      if (new Date().getFullYear() - this.form.year <= 8) {
         await bookAPI.create(this.form).then((res) => {
           if (res.status == 200) alert("Successfull!");
         });

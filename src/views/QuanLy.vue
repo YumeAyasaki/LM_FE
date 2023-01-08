@@ -1,12 +1,15 @@
 <template>
   <div class="QuanLy">
-    <h1>QuanLy</h1>
+    <TitleItem title="Quản lý" />
     <!-- ... -->
   </div>
 </template>
 
 <script>
+import TitleItem from "../components/utils/TitleItem.vue";
+
 export default {
   name: "QuanLy",
+  components: { TitleItem },
 };
 </script>

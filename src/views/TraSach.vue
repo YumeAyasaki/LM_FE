@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <h1>Trả sách</h1>
+    <TitleItem title="Trả sách" />
     <form id="thong-tin-phieu-tra">
       <label>Mã độc giả: </label>
       <input type="text" class="text-input" v-model="reader_id" />
@@ -60,6 +60,8 @@
 </template>
 
 <script>
+import TitleItem from "../components/utils/TitleItem.vue";
+
 import bookLoanAPI from "../components/api/bookLoan";
 
 export default {
@@ -74,6 +76,7 @@ export default {
       phat: 0,
     };
   },
+  components: { TitleItem },
   methods: {
     async viewLoanBook() {
       this.listbook = [];

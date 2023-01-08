@@ -1,7 +1,6 @@
 <template>
   <div class="container">
-    <h1>Mượn sách</h1>
-
+    <TitleItem title="Mượn sách" />
     <form>
       <div id="thong-tin-phieu-muon">
         <label>Mã độc giả: </label>
@@ -52,6 +51,8 @@
 </template>
 
 <script>
+import TitleItem from "../components/utils/TitleItem.vue";
+
 import bookAPI from "../components/api/book";
 import bookloanAPI from "../components/api/bookLoan";
 
@@ -65,6 +66,7 @@ export default {
       loanDate: null,
     };
   },
+  components: { TitleItem },
   methods: {
     async addBook() {
       await bookAPI.findById(this.id_sach).then((response) => {

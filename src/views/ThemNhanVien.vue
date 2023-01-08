@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <h1>Tiếp nhận nhân viên</h1>
+    <TitleItem title="Tiếp nhận nhân viên" />
     <form @submit.prevent="addEmplyee">
       <label>Họ và tên: </label>
       <input type="text" class="text-input" v-model="form.name" />
@@ -62,6 +62,8 @@
 </template>
 
 <script>
+import TitleItem from "../components/utils/TitleItem.vue";
+
 import employeeAPI from "../components/api/employee";
 
 export default {
@@ -79,6 +81,7 @@ export default {
       },
     };
   },
+  components: { TitleItem },
   methods: {
     async addEmplyee() {
       await employeeAPI.create(this.form, "").then((res) => {

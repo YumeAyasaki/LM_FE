@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <h1>Tra cứu sách</h1>
+    <TitleItem title="Tra cứu sách" />
     <form @submit.prevent="findBook">
       <label>Tên sách: </label>
       <input type="text" class="text-input" v-model="key" />
@@ -49,6 +49,8 @@
 </template>
 
 <script>
+import TitleItem from "../components/utils/TitleItem.vue";
+
 import axios from "axios";
 
 export default {
@@ -59,6 +61,7 @@ export default {
       listbook: [],
     };
   },
+  components: { TitleItem },
   methods: {
     async findBook() {
       this.listbook = [];

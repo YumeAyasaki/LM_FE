@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <h1>Ghi nhận mất sách</h1>
+    <TitleItem title="Ghi nhận mất sách" />
     <form>
       <label>Tên sách: </label>
       <input type="text" class="text-input" v-model="form.bookName" />
@@ -38,6 +38,8 @@
 </template>
 
 <script>
+import TitleItem from "../components/utils/TitleItem.vue";
+
 import employeeAPI from "../components/api/employee";
 import lostBookAPI from "../components/api/lostBook";
 
@@ -57,6 +59,7 @@ export default {
       employees: [],
     };
   },
+  components: { TitleItem },
   methods: {
     async getCreatePerson() {
       await employeeAPI

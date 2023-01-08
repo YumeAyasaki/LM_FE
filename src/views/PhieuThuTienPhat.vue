@@ -47,8 +47,7 @@ export default {
     };
   },
   methods: {
-    async handleSubmit(e) {
-      e.preventDefault();
+    async handleSubmit() {
       console.log("Submit");
       console.log(this.form);
     },
