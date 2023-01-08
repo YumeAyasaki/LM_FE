@@ -20,7 +20,16 @@
       </div>
       <div>
         <label>Người thu tiền</label>
-        <input class="text-input" v-model="form.employee" />
+        <select
+          name="nguoi-tiep-nhan"
+          id="nguoi-tiep-nhan"
+          class="select-label"
+          v-model="form.employee"
+        >
+          <option v-for="person in employees" :key="person">
+            {{ person }}
+          </option>
+        </select>
       </div>
       <button v-on:click.prevent="handleSubmit" class="btn" type="submit">
         Lập phiếu thu tiền phạt
@@ -30,10 +39,15 @@
 </template>
 
 <script>
+import employeeAPI from "../components/api/employee";
+
 import TitleItem from "../components/utils/TitleItem.vue";
 
 export default {
   name: "ThuTienPhat",
+  created() {
+    this.getEmployees();
+  },
   components: { TitleItem },
   data: function () {
     return {
@@ -44,6 +58,7 @@ export default {
         remain: 0,
         employee: "",
       },
+      employees: [],
     };
   },
   methods: {
@@ -51,6 +66,17 @@ export default {
       console.log("Submit");
       console.log(this.form);
     },
+    async getEmployees() {
+      await employeeAPI.getEmployeeByDepartment("Thủ Thư").then((response) => {
+        for (let item in response.data) {
+          this.employees.push(response.data[item].name);
+          this.form.employee = this.employees[0];
+        }
+      });
+    },
+  },
+  mounted() {
+    console.log("Mounted!");
   },
 };
 </script>
@@ -58,6 +84,7 @@ export default {
 <style scoped>
 .container {
   margin: 10%;
+  margin-top: 5%;
 }
 
 .text-input {

@@ -36,9 +36,7 @@
             >
               Xóa
             </button>
-            <router-link
-              :to="{ name: 'EditBook', params: { id: book._id } }"
-              class="btnx"
+            <router-link :to="`EditBook/${book._id}?`" class="btnx"
               >Sửa</router-link
             >
           </td>
