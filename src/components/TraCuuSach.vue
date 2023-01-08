@@ -18,17 +18,22 @@
                     <th>Thể loại</th>
                     <th>Tác giả</th>
                     <th>Tình Trạng</th>
+                    <th></th>
                 </tr>
             </thead>
 
             <tbody>
-                <tr v-for="book in listbook" :key="book">
+                <tr v-for="book in listbook" :key="book._id">
                     <td>{{ listbook.indexOf(book) + 1 }}</td>
                     <td>{{book._id}}</td>
                     <td>{{book.name}}</td>
                     <td>{{book.genres}}</td>
                     <td>{{book.author}}</td>
                     <td>{{book.state}}</td>
+                    <td> 
+                        <button  class="btnx"  @click.prevent="removeBook(listbook.indexOf(book))">Xóa</button>
+                        <router-link  :to="{name: 'EditBook',params:{id: book._id}}" class="btnx" >Sửa</router-link>
+                    </td>
                 </tr>
             </tbody>
         </table>
@@ -61,7 +66,31 @@ export default {
             }     
             );
         },
-    }
+        async getallBook() {
+            let url = "https://easy-gold-goshawk-vest.cyclic.app/Book/all";
+            await axios.get(url).then(response => {
+
+                for (let item in response.data)
+                {
+                    this.listbook.push(response.data[item]);
+                }
+            })
+        },
+        
+        async removeBook(index) {
+            let url = "https://easy-gold-goshawk-vest.cyclic.app/Book/" + this.listbook[index]._id;
+            if (confirm("Bạn có chắc muốn xóa?"))
+            {
+                console.log(url);
+                await axios.delete(url);
+                this.listbook.splice(index,1);
+            }
+        }
+    },
+    created() {
+            this.getallBook();
+    },
+
 }
 </script>
 <style scoped>
@@ -84,6 +113,11 @@ export default {
     border: 1px solid #8b8f92;
     appearance: none;
     border-radius: 0.3rem;
+}
+
+.btnx {
+    display: inline-block;
+    margin: 5px;
 }
 
 form {
@@ -110,7 +144,6 @@ label {
     border-radius: 0.3rem;
     border: 1px solid;
     background-color: #d0dce4;
-
     padding: 0.15rem ;
 }
 .btn:hover {

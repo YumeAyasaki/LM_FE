@@ -6,6 +6,7 @@ import TraCuuSach from '../components/TraCuuSach.vue';
 import MuonSach from '../components/MuonSach.vue';
 import TraSach from '../components/TraSach.vue';
 import MatSach from '../components/MatSach.vue';
+import EditBook from '../components/EditBook.vue';
 
 
 const routes = [{
@@ -42,6 +43,11 @@ const routes = [{
         path: '/tra-sach', ///path của route
         name: 'TraSach', // tên route
         component: TraSach // component route sử dụng
+    },
+    {
+        path: '/EditBook/:id?', ///path của route
+        name: 'EditBook', // tên route
+        component: EditBook // component route sử dụng
     },
 ]
 const router = createRouter({
