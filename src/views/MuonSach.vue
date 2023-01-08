@@ -1,70 +1,108 @@
 <template>
   <div class="container">
-    <TitleItem title="Mượn sách" />
+    <h1>Mượn sách</h1>
+
     <form>
-      <label>Tên sách: </label>
-      <input v-model="bookName" type="text" class="text-input" />
+      <div id="thong-tin-phieu-muon">
+        <label>Mã độc giả: </label>
+        <input type="text" class="text-input" v-model="reader_id" />
 
-      <button v-on:click.prevent="handleSubmit" class="btn">Xem kết quả</button>
+        <label>Ngày mượn: </label>
+        <input type="date" class="date-input" v-model="loanDate" />
+
+        <label>Mã sách: </label>
+        <input type="text" class="text-input" v-model="id_sach" />
+        <button class="btn btn-them-sach" @click.prevent="addBook">Thêm</button>
+      </div>
+      <table class="table" id="table-sach-muon">
+        <thead>
+          <tr>
+            <th>STT</th>
+            <th>Mã sách</th>
+            <th>Tên sách</th>
+            <th>Thể loại</th>
+            <th>Tác giả</th>
+            <th></th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr v-for="book in listbook" :key="book">
+            <td>{{ listbook.indexOf(book) + 1 }}</td>
+            <td>{{ book._id }}</td>
+            <td>{{ book.name }}</td>
+            <td>{{ book.genres }}</td>
+            <td>{{ book.author }}</td>
+            <td>
+              <button
+                @click.prevent="remomveBookFromList(listbook.indexOf(book))"
+              >
+                Xóa
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+      <button class="btn btn-muon-sach" @click.prevent="MuonSach">
+        Mượn sách
+      </button>
     </form>
-
-    <table class="table">
-      <thead>
-        <tr>
-          <th>STT</th>
-          <th>Mã sách</th>
-          <th>Tên sách</th>
-          <th>Thể loại</th>
-          <th>Tác giả</th>
-          <th>Tình Trạng</th>
-        </tr>
-      </thead>
-
-      <tbody>
-        <tr v-for="(item, index) in items" :key="item._id">
-          <td>{{ index }}</td>
-          <td>{{ item.id }}</td>
-          <td>{{ item.name }}</td>
-          <td>{{ item.genres }}</td>
-          <td>{{ item.author }}</td>
-          <td>{{ item.state }}</td>
-        </tr>
-      </tbody>
-    </table>
   </div>
 </template>
 
 <script>
-import LayoutDefault from "../components/layouts/LayoutDefault.vue";
-import TitleItem from "../components/utils/TitleItem.vue";
-
-import bookApi from "../components/api/book";
+import axios from "axios";
 
 export default {
   name: "MuonSach",
-  components: { TitleItem },
-  created() {
-    this.$emit("update:layout", LayoutDefault);
-  },
-  data: function () {
+  data() {
     return {
-      items: [],
-      bookName: "",
+      id_sach: "",
+      listbook: [],
+      reader_id: "",
+      loanDate: null,
     };
   },
   methods: {
-    async handleSubmit() {
-      await bookApi.findByName(this.bookName, "").then((res) => {
-        this.items = res.data;
+    async addBook() {
+      let url =
+        "https://easy-gold-goshawk-vest.cyclic.app/Book/" + this.id_sach;
+      await axios.get(url).then((response) => {
+        for (let item in response.data) {
+          this.listbook.push(response.data[item]);
+        }
+        console.log(this.listbook);
+        if (this.listbook.length == 0) alert("Khong tim thay sach");
       });
+    },
+    remomveBookFromList(index) {
+      this.listbook.splice(index, 1);
+    },
+    async MuonSach() {
+      for (var i = 0; i < this.listbook.length; i++) {
+        const Data = {
+          reader_id: this.reader_id,
+          loanDate: this.loanDate,
+          book: this.listbook[i]._id,
+        };
+        console.log(Data);
+        let url = "https://easy-gold-goshawk-vest.cyclic.app/BookLoan";
+        await axios.post(url, Data).then((response) => {
+          console.log(response);
+        });
+      }
+      alert("Successfull!");
     },
   },
 };
 </script>
 <style scoped>
 .container {
-  margin: 10%;
-  margin-top: 5%;
+  margin-left: 10%;
+  margin-right: 10%;
+
+  margin-top: 20px;
 }
 
 .text-input {
@@ -81,7 +119,20 @@ export default {
   border-radius: 0.3rem;
 }
 
-form {
+.date-input {
+  width: 200px;
+  display: block;
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.5;
+  color: #212529;
+  background-color: #fff;
+  background-clip: padding-box;
+  border: 1px solid #8b8f92;
+  border-radius: 0.3rem;
+}
+
+#thong-tin-phieu-muon {
   padding-left: 25%;
 }
 
@@ -108,6 +159,11 @@ label {
 
   padding: 0.15rem;
 }
+
+.btn-muon-sach {
+  float: right;
+}
+
 .btn:hover {
   background-color: #8b8f92;
 }

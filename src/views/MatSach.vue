@@ -3,37 +3,93 @@
     <h1>Ghi nhận mất sách</h1>
     <form>
       <label>Tên sách: </label>
-      <input type="text" class="text-input" />
+      <input type="text" class="text-input" v-model="form.bookName" />
+
+      <label>Mã sách: </label>
+      <input type="text" class="text-input" v-model="form.bookId" />
 
       <label>Ngày ghi nhận: </label>
-      <input type="date" class="date-input" />
+      <input type="date" class="date-input" v-model="form.date" />
 
       <label>Họ tên độc giả: </label>
-      <input type="text" class="text-input" />
+      <input type="text" class="text-input" v-model="form.readerName" />
 
       <label>Mã độc giả: </label>
-      <input type="text" class="text-input" />
+      <input type="text" class="text-input" v-model="form.readerId" />
 
       <label>Tiền phạt: </label>
-      <input type="text" class="text-input" />
+      <input type="number" class="text-input" v-model="form.compensation" />
 
       <label>Người ghi nhận: </label>
-      <select name="nguoi-ghi-nhan" id="nguoi-ghi-nhan" class="select-label">
-        <option>Nguyễn Văn A</option>
-        <option>Trần Thị B</option>
+      <select
+        name="nguoi-ghi-nhan"
+        id="nguoi-ghi-nhan"
+        class="select-label"
+        v-model="form.employee"
+      >
+        <option v-for="person in employees" :key="person">{{ person }}</option>
       </select>
 
-      <button class="btn">Ghi nhận mất sách</button>
+      <button class="btn" @click.prevent="GhiNhanMatSach">
+        Ghi nhận mất sách
+      </button>
     </form>
   </div>
 </template>
 
 <script>
-import LayoutDefault from "../components/layouts/LayoutDefault.vue";
+import axios from "axios";
+
 export default {
   name: "MatSach",
+  data() {
+    return {
+      form: {
+        bookName: "",
+        bookId: "",
+        readerName: "",
+        readerId: "",
+        date: null,
+        employee: "",
+        compensation: 0,
+      },
+      employees: [],
+    };
+  },
+  methods: {
+    async getCreatePerson() {
+      let url =
+        "https://easy-gold-goshawk-vest.cyclic.app/Employee/department/Thủ Thư";
+      await axios.get(url).then((response) => {
+        for (let item in response.data) {
+          this.employees.push(response.data[item].name);
+          this.employee = this.employees[0];
+        }
+      });
+    },
+    async GhiNhanMatSach() {
+      const Data = {
+        bookName: this.bookName,
+        bookId: this.bookId,
+        date: this.date,
+        readerName: this.readerName,
+        readerId: this.readerId,
+        employee: this.employee,
+        compensation: this.compensation,
+      };
+      let url = "https://easy-gold-goshawk-vest.cyclic.app/LostBook";
+      await axios.post(url, Data).then((response) => {
+        console.log(response);
+        alert("Successfull!");
+      });
+    },
+  },
   created() {
-    this.$emit("update:layout", LayoutDefault);
+    this.getCreatePerson();
+  },
+
+  mounted() {
+    console.log("Mounted!");
   },
 };
 </script>
