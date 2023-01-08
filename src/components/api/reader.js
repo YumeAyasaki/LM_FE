@@ -11,7 +11,10 @@ const readerAPI = {
     const url = `${baseURL}/${model}/${id}`;
     return get(url, token);
   },
-
+  getReaderByName: (name, token) => {
+    const url = `${baseURL}/${model}/?name=${name}`;
+    return get(url, token);
+  },
   update: (id, data, token) => {
     const url = `${baseURL}/${model}/${id}`;
     return put(url, data, token);

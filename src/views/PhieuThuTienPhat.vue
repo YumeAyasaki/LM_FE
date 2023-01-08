@@ -40,6 +40,7 @@
 
 <script>
 import employeeAPI from "../components/api/employee";
+import readerAPI from "../components/api/reader";
 
 import TitleItem from "../components/utils/TitleItem.vue";
 
@@ -63,8 +64,19 @@ export default {
   },
   methods: {
     async handleSubmit() {
-      console.log("Submit");
-      console.log(this.form);
+      await readerAPI.getReaderByName(this.form.name, "").then((res) => {
+        let reader = {
+          email: res.data.email,
+          address: res.data.address,
+          createAt: res.data.createAt,
+          totalLoan: res.data.totalLoan,
+          name: res.data.name,
+          type: res.data.type,
+          dateOfBirth: res.data.dateOfBirth,
+          createPerson: res.data.createPerson,
+        };
+        readerAPI.update(res.data.id, reader, "");
+      });
     },
     async getEmployees() {
       await employeeAPI.getEmployeeByDepartment("Thủ Thư").then((response) => {

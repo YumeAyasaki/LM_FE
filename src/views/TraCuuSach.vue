@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <TitleItem title="Tra cứu sách" />
+    <h1>Tra cứu sách</h1>
     <form @submit.prevent="findBook">
       <label>Tên sách: </label>
       <input type="text" class="text-input" v-model="key" />
@@ -36,7 +36,9 @@
             >
               Xóa
             </button>
-            <router-link :to="`EditBook/${book._id}?`" class="btnx"
+            <router-link
+              :to="{ name: 'EditBook', params: { id: book._id } }"
+              class="btnx"
               >Sửa</router-link
             >
           </td>
@@ -47,19 +49,16 @@
 </template>
 
 <script>
-import TitleItem from "../components/utils/TitleItem.vue";
-
 import axios from "axios";
-
 export default {
   name: "TraCuuSach",
   data() {
     return {
       key: "",
+      STT: 1,
       listbook: [],
     };
   },
-  components: { TitleItem },
   methods: {
     async findBook() {
       this.listbook = [];
@@ -103,7 +102,6 @@ export default {
   margin: 10%;
   margin-top: 5%;
 }
-
 .text-input {
   display: block;
   width: 60%;
@@ -117,16 +115,13 @@ export default {
   appearance: none;
   border-radius: 0.3rem;
 }
-
 .btnx {
   display: inline-block;
   margin: 5px;
 }
-
 form {
   padding-left: 25%;
 }
-
 h1 {
   text-align: center;
   font-weight: bold;
@@ -135,10 +130,8 @@ label {
   display: block;
   font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
-
 .btn {
   margin-top: 1em;
-
   display: inline-block;
   font-family: Verdana, Geneva, Tahoma, sans-serif;
   font-size: 1rem;
@@ -152,24 +145,20 @@ label {
 .btn:hover {
   background-color: #8b8f92;
 }
-
 table {
   margin-top: 10pt;
   border-collapse: collapse;
   width: 100%;
 }
-
 tr:nth-child(even) {
   background-color: #f2f2f2;
 }
-
 th {
   background-color: #888889;
   color: white;
   padding: 0.5rem;
   font-weight: bold;
 }
-
 th,
 td {
   text-align: left;
