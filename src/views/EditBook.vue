@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <h1>Sửa thông tin sách</h1>
+    <TitleItem title="Sửa thông tin sách" />
     <form form @submit.prevent="addBook">
       <label>Tên sách: </label>
       <input type="text" class="text-input" v-model="name" />
@@ -49,6 +49,7 @@
 
 <script>
 import axios from "axios";
+import TitleItem from "../components/utils/TitleItem.vue";
 
 export default {
   name: "EditBook",
@@ -65,6 +66,7 @@ export default {
       importers: [],
     };
   },
+  components: { TitleItem },
   methods: {
     async addBook() {
       if (new Date().getFullYear() - this.year <= 8) {

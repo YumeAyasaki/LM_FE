@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <h1>Tra cứu sách</h1>
+    <TitleItem title="Tra cứu sách" />
     <form @submit.prevent="findBook">
       <label>Tên sách: </label>
       <input type="text" class="text-input" v-model="key" />
@@ -49,7 +49,12 @@
 </template>
 
 <script>
+import TitleItem from "../components/utils/TitleItem.vue";
+
+import bookAPI from "../components/api/book";
+
 import axios from "axios";
+
 export default {
   name: "TraCuuSach",
   data() {
@@ -59,12 +64,12 @@ export default {
       listbook: [],
     };
   },
+  components: { TitleItem },
   methods: {
     async findBook() {
       this.listbook = [];
-      let url =
-        "https://easy-gold-goshawk-vest.cyclic.app/Book/?name=" + this.key;
-      await axios.get(url).then((response) => {
+
+      await bookAPI.findByName(this.key).then((response) => {
         for (let item in response.data) {
           this.listbook.push(response.data[item]);
         }
